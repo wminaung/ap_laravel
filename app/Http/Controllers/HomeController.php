@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\storePostRequest;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
+
+    public function testroot()
+    {
+        dd("This is the root path");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Post::all();
-        return view('home');
+        // $data = Post::all();
+        //  $data = DB::table('posts')->orderBy('id', 'desc')->get();
+        $data = Post::orderBy('id', 'desc')->get();
+
+        return view('home', compact('data'));
     }
 
     /**
@@ -24,7 +38,8 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('create', compact('categories'));
     }
 
     /**
@@ -33,9 +48,13 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storePostRequest $request)
     {
-        //
+        // $post = new Post(); // $post->name = $request->name;    // $post->description = $request->description;  // $post->save();
+        $validated = $request->validated();
+        Post::create($validated);
+
+        return redirect('/posts');
     }
 
     /**
@@ -44,9 +63,10 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+
+        return view('show', compact('post'));
     }
 
     /**
@@ -55,9 +75,10 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        return view('edit', compact('post', 'categories'));
     }
 
     /**
@@ -67,9 +88,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(storePostRequest $request, Post $post)
     {
-        //
+        $validated = $request->validated();
+        $post->update($validated);
+        return redirect('/posts');
     }
 
     /**
@@ -78,8 +101,9 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect('/posts');
     }
 }

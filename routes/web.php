@@ -16,7 +16,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-// Route::get('/', [HomeController::class, 'index']);
+
+
+Route::get('/', [HomeController::class, 'testroot'])->name('root');
 
 Route::resource('posts', HomeController::class);
 
@@ -24,9 +26,14 @@ Route::resource('posts', HomeController::class);
 
 
 
-
+// Route::get('/', [HomeController::class, 'index']);
+############################################################################
 // Route::get('/test/{data}', function ($data) {
 //     $got = request('id');
 
 //     return view('test', compact('data', 'got'));
 // });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
