@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'edit');
+        // $this->middleware('auth')->only('index','edit')
+        //  $this->middleware('auth')->except('index', 'edit')
+    }
+
     public function testroot()
     {
         dd("This is the root path");

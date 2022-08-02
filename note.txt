@@ -2,4 +2,5 @@
 >>> php artisan make:request <name>
 
 
-5
+wee 5.2
+30:00

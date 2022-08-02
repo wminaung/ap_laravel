@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 
 
@@ -18,9 +19,11 @@ use App\Http\Controllers\HomeController;
 
 
 
-Route::get('/', [HomeController::class, 'testroot'])->name('root');
+
 
 Route::resource('posts', HomeController::class);
+
+Route::get('logout', [AuthController::class, 'logout']);
 
 
 
@@ -34,6 +37,6 @@ Route::resource('posts', HomeController::class);
 //     return view('test', compact('data', 'got'));
 // });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');

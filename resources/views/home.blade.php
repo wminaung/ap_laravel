@@ -3,8 +3,12 @@
 @section("content")
 <div class="container">
     <div>
-        <a href="{{ route('root') }}" class="btn btn-success">go to root path</a>
+
         <a href="/posts/create" class="btn btn-success">New Post</a>
+        <a href="/logout" class="btn btn-warning">Logout</a>
+
+
+
     </div><br>
     <div class="card">
         <div class="card-header text-center">
