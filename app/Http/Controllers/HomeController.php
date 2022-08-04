@@ -14,7 +14,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'edit');
+        // $this->middleware('auth');
         // $this->middleware('auth')->only('index','edit')
         //  $this->middleware('auth')->except('index', 'edit')
     }
@@ -33,7 +33,8 @@ class HomeController extends Controller
     {
         // $data = Post::all();
         //  $data = DB::table('posts')->orderBy('id', 'desc')->get();
-        $data = Post::orderBy('id', 'desc')->get();
+
+        $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
 
         return view('home', compact('data'));
     }
@@ -72,7 +73,11 @@ class HomeController extends Controller
      */
     public function show(Post $post)
     {
+        // if ($post->user_id != auth()->id()) {
+        //     abort(403);
+        // }
 
+        $this->authorize('view', $post);
         return view('show', compact('post'));
     }
 
@@ -84,6 +89,7 @@ class HomeController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('view', $post);
         $categories = Category::all();
         return view('edit', compact('post', 'categories'));
     }

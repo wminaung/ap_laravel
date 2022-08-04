@@ -21,7 +21,7 @@ use App\Http\Controllers\HomeController;
 
 
 
-Route::resource('posts', HomeController::class);
+Route::resource('posts', HomeController::class)->middleware('auth:web');
 
 Route::get('logout', [AuthController::class, 'logout']);
 
@@ -39,4 +39,4 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
-// })->name('dashboard');
+// })->name('dashboard');  
