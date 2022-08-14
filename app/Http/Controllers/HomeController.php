@@ -7,8 +7,11 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\storePostRequest;
-
+use App\Mail\PostCreated;
+use App\Mail\PostStored;
 
 class HomeController extends Controller
 {
@@ -30,13 +33,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(/*Request $request*/)
     {
-        // $data = Post::all();
-        //  $data = DB::table('posts')->orderBy('id', 'desc')->get();
-        dd(Post::all());
-        $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
 
+        $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
         return view('home', compact('data'));
     }
 
@@ -61,9 +61,10 @@ class HomeController extends Controller
     {
         // $post = new Post(); // $post->name = $request->name;    // $post->description = $request->description;  // $post->save();
         $validated = $request->validated();
-        Post::create($validated);
+        $post =  Post::create($validated + ['user_id' => Auth::user()->id]);
 
-        return redirect('/posts');
+        //$request->session()->flash('status', "Post was successful created!"); <or>
+        return redirect('/posts')->with('status', config('aprogrammer.messages.created'));
     }
 
     /**

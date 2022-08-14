@@ -9,10 +9,17 @@
         <h4 style="float: right;">{{ Auth::user()->name; }}</h4>
 
     </div><br>
+    @if(session('status'))
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> {{ session('status') }}
+    </div>
+    @endif
     <div class="card">
         <div class="card-header text-center">
             Contents
         </div>
+
         <div class="card-body">
             @foreach($data as $post)
             <div>
