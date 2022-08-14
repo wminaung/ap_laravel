@@ -2,5 +2,8 @@
 >>> php artisan make:request <name>
 
 
-wee 6
-
+wee 6.1 / 25:51
+wee 6.2
+:1>container> Mala  || service container
+:2>services> Ingredients
+:3>provider> Chif || service provider

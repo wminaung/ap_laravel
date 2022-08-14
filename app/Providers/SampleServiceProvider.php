@@ -4,27 +4,28 @@ namespace App\Providers;
 
 use App\Test;
 use Illuminate\Support\ServiceProvider;
-// custom //use Illuminate\Support\Facades\Schema;
 
-class AppServiceProvider extends ServiceProvider
+class SampleServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
+        $this->app->bind('test', function () {
+            return new Test("Aung");
+        });
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
         //
-        // custom // Schema::defaultStringLength(191);
     }
 }

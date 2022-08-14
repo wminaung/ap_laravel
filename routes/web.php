@@ -1,10 +1,13 @@
 <?php
 
 
+use App\Test;
+
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-
+use App\TestFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +22,9 @@ use App\Http\Controllers\HomeController;
 
 
 
-
+Route::get('/', function () {
+    dd(app('test')->execute());
+});
 
 Route::resource('posts', HomeController::class)->middleware('auth:web');
 
